@@ -26,13 +26,14 @@ public class App {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            // Get objects from the DB
-            Movie movie = session.get(Movie.class, 1);
-            System.out.println(movie.getActors());
+            // Add a new movie to the database
+            Movie movie = new Movie("Reservoir Dogs", 1992);
+            Actor actor = session.get(Actor.class, 1);
 
-            System.out.println("~~~~~~~~~~~~");
-            Actor actor = session.get(Actor.class, 2);
-            System.out.println(actor.getMovies());
+            movie.setActors(new ArrayList<>(Collections.singletonList(actor)));
+            actor.getMovies().add(movie);
+
+            session.save(movie);
 
             session.getTransaction().commit();
         }
