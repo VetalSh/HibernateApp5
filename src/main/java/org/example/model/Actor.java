@@ -74,4 +74,24 @@ public class Actor {
         ", age=" + age +
         '}';
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Actor)) return false;
+
+    Actor actor = (Actor) o;
+
+    if (id != actor.id) return false;
+    if (age != actor.age) return false;
+    return name != null ? name.equals(actor.name) : actor.name == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id;
+    result = 31 * result + (name != null ? name.hashCode() : 0);
+    result = 31 * result + age;
+    return result;
+  }
 }

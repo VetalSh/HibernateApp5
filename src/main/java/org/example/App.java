@@ -26,14 +26,14 @@ public class App {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            // Add a new movie to the database
-            Movie movie = new Movie("Reservoir Dogs", 1992);
-            Actor actor = session.get(Actor.class, 1);
+            // Remove a link between a movie and an actor
+            Actor actor = session.get(Actor.class, 2);
+            System.out.println(actor.getMovies());
 
-            movie.setActors(new ArrayList<>(Collections.singletonList(actor)));
-            actor.getMovies().add(movie);
+            Movie movieToRemove = actor.getMovies().get(0);
 
-            session.save(movie);
+            actor.getMovies().remove(0);
+            movieToRemove.getActors().remove(actor);
 
             session.getTransaction().commit();
         }
